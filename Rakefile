@@ -4,8 +4,8 @@ require 'rake/clean'
 require 'rake/testtask'
 require 'rake/packagetask'
 require 'rake/gempackagetask'
-require 'rake/rdoctask'
-
+require 'rake/rdoctask'    
+            
 GEM_NAME = "gbarcode" # what ppl will type to install your gem
 RUBYFORGE_PROJECT = "gbarcode" # The unix name for your project
 HOMEPATH = "http://#{RUBYFORGE_PROJECT}.rubyforge.org"
@@ -95,6 +95,17 @@ task :package_win32 => ["hpricot_scan_win32"] do
     verbose(true) {
       mv Dir["*.gem"].first, "../pkg/#{WIN32_PKG_DIR}.gem"
     }
+  end
+end
+
+namespace :gem do
+  namespace :spec do
+    desc "Update gbarcode.gemspec"
+    task :generate do
+      File.open("gbarcode.gemspec", "w") do |f|
+        f.puts(SPEC.to_ruby)
+      end
+    end
   end
 end
 
